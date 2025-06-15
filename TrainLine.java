@@ -8,6 +8,8 @@ public class TrainLine {
     private Station head;
     /** Current number of stations in the line */
     private int numberOfStations;
+    /** Tracks the end of the station - ASSIGNMENT 3 */
+    private Station end;
 
     /** Basic constructor */
     public TrainLine(String name) {
@@ -30,6 +32,10 @@ public class TrainLine {
      * Adds a new station after the last station of a trainline.
      * 
      * @param name String with name of new station to create and add
+     *
+     * ASSIGNMENT 03 - Instead of iterating through the while loop everytime this method is called, the loop
+     * now calls the new "end" variable to directly call the last station in the train line, adds the new station,
+     * and assigns the "end" to be the last variable on the line.
      */
     public void add(String name) {
         Station newStation = new Station(name);
@@ -37,15 +43,13 @@ public class TrainLine {
             // No stations exist in this line. Make this new station
             // the head station of the line
             this.head = newStation;
+            // sets the end to the same station as well - only station is both start and end
+            this.end = newStation;
         } else {
-            // The line has at least one station (the head station).
-            // Find the last station and make its next station the new one.
-            Station cursor = this.head;
-            while (cursor.hasNext()) {
-                cursor = cursor.getNext();
-            }
-            // Cursor is now at the last station of the line
-            cursor.setNext(newStation);
+            // sets the next station from the end to be the new station
+            this.end.setNext(newStation);
+            // sets the new station as the last station
+            this.end = newStation;
         }
         this.numberOfStations = this.numberOfStations+1; 
         // or this.numberOfStations++;
@@ -70,6 +74,59 @@ public class TrainLine {
         return counter;
     } // method countStations
 
+    /**
+     * I couldn't think of another way to execute this method other than to iterate through the station
+     * and find the index that way. I thought about adding a new "index" variable to the "Station" class,
+     * but that wouldn't work as I would still have to iterate through to find the index, anyway.
+     *
+     * METHOD EXPLANATION:
+     * Finds the index of the desired Station in the list. Counts after each iteration (index) and either returns
+     * the index, or returns "-1" if there is no Station matching the provided name (case-sensitive)
+     * @param stationName - specified station
+     * @return station index or "-1"
+     */
+
+    public int indexOf(String stationName) {
+        // default index
+        int index = -1;
+        // initializing current index variable
+        int i = 0;
+        // initializing a cursor to "ride the line"
+        Station cursor = this.head;
+        // the cursor will "ride" until it either reaches the end or finds the desired station.
+        // the loop keeps track at which station it's at until it ends
+        while (cursor != null && cursor.getName() != stationName) {
+            // updates current index
+            i++;
+            // moves cursor to next station
+            cursor = cursor.getNext();
+        }
+        // if the cursor found the specified station, the current index will replace the default index
+        // otherwise, default index is kept
+        if (cursor != null) {
+            // assigns current index to returned index
+            index = i;
+        }
+        return index;
+    } // method indexOf
+
+    /**
+     * I thought that using the previous method to implement this one was the most appropriate.
+     *
+     * METHOD EXPLANATION:
+     * Finds whether the specified station name exists within a train line by using indexOf().
+     * @param stationName - specified station
+     * @return contain - boolean that is true if the line contains the station (again, case-sensitive)
+     */
+
+    public boolean contains(String stationName) {
+        // checks that there is a station with the specified name by calling indexOf() the train line.
+        // if the station exist, the index should be between 0 and the length - 1.
+        // if not, the index will return "-1", which makes the boolean below false.
+        boolean contain = (this.indexOf(stationName) != -1);
+        // returns the boolean.
+        return contain;
+    } // method contains
 
     /**
      * String representation of the object
