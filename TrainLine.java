@@ -35,7 +35,7 @@ public class TrainLine {
      *
      * ASSIGNMENT 03 - Instead of iterating through the while loop everytime this method is called, the loop
      * now calls the new "end" variable to directly call the last station in the train line, adds the new station,
-     * and assigns the "end" to be the last variable on the line.
+     * and assigns the "end" to be the last station on the line.
      */
     public void add(String name) {
         Station newStation = new Station(name);
