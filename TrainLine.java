@@ -103,6 +103,8 @@ public class TrainLine {
         }
         // if the cursor found the specified station, the current index will replace the default index
         // otherwise, default index is kept
+        // if the station isn't in the line, the cursor will land at "null", as it will have iterated through the whole
+        // line move on to the next station from last. This, by definition of the TrainLine and Station objects, is "null"
         if (cursor != null) {
             // assigns current index to returned index
             index = i;
