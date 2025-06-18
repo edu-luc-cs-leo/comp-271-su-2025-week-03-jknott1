@@ -15,7 +15,7 @@ public class TrainLine {
     public TrainLine(String name) {
         this.name = name;
         this.head = null;
-        this.end = null
+        this.end = null;
         this.numberOfStations = 0;
     } // basic constructor
 
