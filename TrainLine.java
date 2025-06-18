@@ -15,6 +15,7 @@ public class TrainLine {
     public TrainLine(String name) {
         this.name = name;
         this.head = null;
+        this.end = null
         this.numberOfStations = 0;
     } // basic constructor
 
@@ -43,14 +44,12 @@ public class TrainLine {
             // No stations exist in this line. Make this new station
             // the head station of the line
             this.head = newStation;
-            // sets the end to the same station as well - only station is both start and end
-            this.end = newStation;
         } else {
             // sets the next station from the end to be the new station
             this.end.setNext(newStation);
-            // sets the new station as the last station
-            this.end = newStation;
         }
+        // sets the new station as the last station
+        this.end = newStation;
         this.numberOfStations = this.numberOfStations+1; 
         // or this.numberOfStations++;
         // or this.numberOfStatiosn += 1;
